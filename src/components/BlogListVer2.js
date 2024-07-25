@@ -7,7 +7,7 @@ import propTypes from "prop-types";
 import Pagination from "./Pagination";
 import { usePagination } from "../hooks/usePagination";
 
-const BlogList_ver2 = ({ isAdmin = false }) => {
+const BlogListVer2 = ({ isAdmin = false }) => {
   const {
     currentPage,
     numberOfPages,
@@ -48,12 +48,12 @@ const BlogList_ver2 = ({ isAdmin = false }) => {
           setLoading(false);
         });
     },
-    [isAdmin, searchText]
+    [isAdmin, searchText, setNumberOfData]
   );
 
   useEffect(() => {
     getPosts(currentPage);
-  }, [currentPage]);
+  }, [getPosts, currentPage]);
 
   const deleteBlog = (e, id) => {
     e.stopPropagation();
@@ -128,7 +128,7 @@ const BlogList_ver2 = ({ isAdmin = false }) => {
   );
 };
 
-BlogList_ver2.propTypes = {
+BlogListVer2.propTypes = {
   isAdmin: propTypes.bool,
 };
 
@@ -136,4 +136,4 @@ BlogList_ver2.propTypes = {
 //   isAdmin: false,
 // };
 
-export default BlogList_ver2;
+export default BlogListVer2;

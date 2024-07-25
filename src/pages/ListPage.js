@@ -1,5 +1,5 @@
 import BlogList from "../components/BlogList";
-import BlogList_ver2 from "../components/BlogList_ver2";
+import BlogListVer2 from "../components/BlogListVer2";
 
 const ListPage = () => {
   return (
@@ -8,7 +8,7 @@ const ListPage = () => {
         <div className="d-flex justify-content-between">
           <h1>Blogs</h1>
         </div>
-        <BlogList_ver2 />
+        <BlogListVer2 />
       </div>
     </>
   );
