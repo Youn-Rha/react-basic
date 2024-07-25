@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import BlogList from "../components/BlogList";
+import { useEffect } from "react";
+import BlogList_ver2 from "../components/BlogList_ver2";
 
 const AdminPage = () => {
   return (
@@ -13,7 +15,7 @@ const AdminPage = () => {
             </Link>
           </div>
         </div>
-        <BlogList isAdmin={true} />
+        <BlogList_ver2 isAdmin={true} />
       </div>
     </>
   );

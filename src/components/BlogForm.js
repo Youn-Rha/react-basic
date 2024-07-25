@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import propTypes from "prop-types";
 
 const BlogFrom = ({ editing = false }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [title, setTitle] = useState("");
@@ -37,9 +37,9 @@ const BlogFrom = ({ editing = false }) => {
 
   const goback = () => {
     if (editing) {
-      history.push(`/blogs/${id}`);
+      navigate(`/blogs/${id}`);
     } else {
-      history.push("/blogs");
+      navigate("/blogs");
     }
   };
 
@@ -52,7 +52,7 @@ const BlogFrom = ({ editing = false }) => {
           publish,
         })
         .then((res) => {
-          history.push(`/blogs/${id}`);
+          navigate(`/blogs/${id}`);
         });
     } else {
       // fetch('http://localhost:3001/posts',{
@@ -76,7 +76,7 @@ const BlogFrom = ({ editing = false }) => {
           createdAt: Date.now(),
         })
         .then(() => {
-          history.push("/admin");
+          navigate("/admin");
         });
       // axios.get('http://localhost:3001/posts')
       //   .then(function(response){

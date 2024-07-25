@@ -5,29 +5,24 @@ import { useNavigate, useLocation } from "react-router";
 import LoadingSpinner from "../components/LoadingSpinner";
 import propTypes from "prop-types";
 import Pagination from "./Pagination";
+import { usePagination } from "../hooks/usePagination";
 
-const BlogList = ({ isAdmin = false }) => {
+const BlogList_ver2 = ({ isAdmin = false }) => {
+  const {
+    currentPage,
+    numberOfPages,
+    setCurrentPage,
+    handleClickPageButton,
+    setNumberOfData,
+  } = usePagination();
+
   const navigate = useNavigate();
   const location = useLocation();
-  const pageParam = new URLSearchParams(location.search).get("page");
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [numberOfPosts, setNumberOfPosts] = useState(0);
-  const [numberOfPages, setNumberOfPages] = useState(0);
   const [searchText, setSearchText] = useState("");
 
   const limit = 4;
-
-  useEffect(() => {
-    setNumberOfPages(Math.ceil(numberOfPosts / limit));
-  }, [numberOfPosts]);
-
-  const onClickPageButton = (page) => {
-    navigate(`${location.pathname}?page=${page}`);
-    setCurrentPage(page);
-    getPosts(page);
-  };
 
   const getPosts = useCallback(
     (page = 1) => {
@@ -48,7 +43,7 @@ const BlogList = ({ isAdmin = false }) => {
           params,
         })
         .then((res) => {
-          setNumberOfPosts(res.headers["x-total-count"]);
+          setNumberOfData(res.headers["x-total-count"]);
           setPosts(res.data);
           setLoading(false);
         });
@@ -56,17 +51,16 @@ const BlogList = ({ isAdmin = false }) => {
     [isAdmin, searchText]
   );
 
+  useEffect(() => {
+    getPosts(currentPage);
+  }, [currentPage]);
+
   const deleteBlog = (e, id) => {
     e.stopPropagation();
     axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     });
   };
-
-  useEffect(() => {
-    setCurrentPage(parseInt(pageParam) || 1);
-    getPosts(parseInt(pageParam) || 1);
-  }, []);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -125,7 +119,7 @@ const BlogList = ({ isAdmin = false }) => {
             <Pagination
               currentPage={currentPage}
               numberOfPages={numberOfPages}
-              onClick={onClickPageButton}
+              onClick={handleClickPageButton}
             />
           )}
         </>
@@ -134,7 +128,7 @@ const BlogList = ({ isAdmin = false }) => {
   );
 };
 
-BlogList.propTypes = {
+BlogList_ver2.propTypes = {
   isAdmin: propTypes.bool,
 };
 
@@ -142,4 +136,4 @@ BlogList.propTypes = {
 //   isAdmin: false,
 // };
 
-export default BlogList;
+export default BlogList_ver2;

@@ -8,27 +8,27 @@ import AdminPage from "./pages/AdminPage";
 const routes = [
   {
     path: "/",
-    component: HomePage,
+    element: <HomePage />,
   },
   {
     path: "/blogs",
-    component: ListPage,
+    element: <ListPage />,
   },
   {
     path: "/admin",
-    component: AdminPage,
+    element: <AdminPage />,
   },
   {
     path: "/blogs/create",
-    component: CreatePage,
+    element: <CreatePage />,
   },
   {
     path: "/blogs/:id/edit",
-    component: EditPage,
+    element: <EditPage />,
   },
   {
     path: "/blogs/:id",
-    component: ShowPage,
+    element: <ShowPage />,
   },
 ];
 
