@@ -13,7 +13,7 @@ const BlogListVer2 = ({ isAdmin = false }) => {
     numberOfPages,
     setCurrentPage,
     handleClickPageButton,
-    setNumberOfData,
+    setNumberOfPosts,
   } = usePagination();
 
   const navigate = useNavigate();
@@ -43,12 +43,12 @@ const BlogListVer2 = ({ isAdmin = false }) => {
           params,
         })
         .then((res) => {
-          setNumberOfData(res.headers["x-total-count"]);
+          setNumberOfPosts(res.headers["x-total-count"]);
           setPosts(res.data);
           setLoading(false);
         });
     },
-    [isAdmin, searchText, setNumberOfData]
+    [isAdmin, searchText, setNumberOfPosts]
   );
 
   useEffect(() => {

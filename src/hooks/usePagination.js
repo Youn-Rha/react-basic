@@ -7,7 +7,7 @@ export const usePagination = (limit = 4) => {
     const pageParam = new URLSearchParams(location.search).get("page");
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [numberOfData, setNumberOfData] = useState(0);
+    const [numberOfPosts, setNumberOfPosts] = useState(0);
     const [numberOfPages, setNumberOfPages] = useState(0);
 
     useEffect(() => {
@@ -15,8 +15,8 @@ export const usePagination = (limit = 4) => {
     }, [pageParam]);
 
     useEffect(() => {
-        setNumberOfPages(Math.ceil(numberOfData / limit));
-    }, [numberOfData, limit]);
+        setNumberOfPages(Math.ceil(numberOfPosts / limit));
+    }, [numberOfPosts, limit]);
 
     const handleClickPageButton = useCallback(
         (page) => {
@@ -32,6 +32,6 @@ export const usePagination = (limit = 4) => {
         numberOfPages,
         setCurrentPage,
         handleClickPageButton,
-        setNumberOfData,
+        setNumberOfPosts,
     };
 };
