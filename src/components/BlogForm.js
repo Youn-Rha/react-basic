@@ -46,7 +46,7 @@ const BlogFrom = ({ editing = false }) => {
   const onSubmit = () => {
     if (editing) {
       axios
-        .patch(`http://localhost:3001/posts/${id}`, {
+        .put(`http://localhost:3001/posts/${id}`, {
           title,
           body,
           publish,

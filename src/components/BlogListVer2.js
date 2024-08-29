@@ -8,13 +8,15 @@ import Pagination from "./Pagination";
 import { usePagination } from "../hooks/usePagination";
 
 const BlogListVer2 = ({ isAdmin = false }) => {
+  const limit = 5;
+
   const {
     currentPage,
     numberOfPages,
     setCurrentPage,
     handleClickPageButton,
     setNumberOfPosts,
-  } = usePagination();
+  } = usePagination(limit);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,15 +24,25 @@ const BlogListVer2 = ({ isAdmin = false }) => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
-  const limit = 4;
+  const fetchPosts = () => {
+    axios.get(`http://155.230.34.229:8080/posts`).then((res) => {
+      isAdmin
+        ? setNumberOfPosts(res.data.length)
+        : setNumberOfPosts(res.data.filter((d) => d.publish).length);
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   const getPosts = useCallback(
     (page = 1) => {
+      const adjustedPage = page - 1;
       let params = {
-        _page: page,
-        _limit: limit,
-        _sort: "id",
-        _order: "asc",
+        page: adjustedPage,
+        size: limit,
         title_like: searchText,
       };
 
@@ -39,16 +51,16 @@ const BlogListVer2 = ({ isAdmin = false }) => {
       }
 
       axios
-        .get(`http://localhost:3001/posts`, {
+        .get(`http://155.230.34.229:8080/posts`, {
           params,
         })
         .then((res) => {
-          setNumberOfPosts(res.headers["x-total-count"]);
+          console.log(res);
           setPosts(res.data);
           setLoading(false);
         });
     },
-    [isAdmin, searchText, setNumberOfPosts]
+    [isAdmin, searchText]
   );
 
   useEffect(() => {
@@ -57,7 +69,7 @@ const BlogListVer2 = ({ isAdmin = false }) => {
 
   const deleteBlog = (e, id) => {
     e.stopPropagation();
-    axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
+    axios.delete(`http://155.230.34.229:8080/posts/${id}`).then(() => {
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     });
   };
@@ -67,28 +79,32 @@ const BlogListVer2 = ({ isAdmin = false }) => {
   }
 
   const renderBlogList = () => {
-    return posts.map((post) => {
-      return (
-        <Card
-          key={post.id}
-          title={post.title}
-          onClick={() => navigate(`/blogs/${post.id}`)}
-        >
-          {isAdmin ? (
-            <div>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={(e) => {
-                  deleteBlog(e, post.id);
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          ) : null}
-        </Card>
-      );
-    });
+    return posts
+      .filter((post) => {
+        return isAdmin || post.publish;
+      })
+      .map((post) => {
+        return (
+          <Card
+            key={post.id}
+            title={post.title}
+            onClick={() => navigate(`/blogs/${post.id}`)}
+          >
+            {isAdmin ? (
+              <div>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={(e) => {
+                    deleteBlog(e, post.id);
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            ) : null}
+          </Card>
+        );
+      });
   };
 
   const onSearch = (e) => {
