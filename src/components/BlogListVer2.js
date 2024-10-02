@@ -38,11 +38,11 @@ const BlogListVer2 = ({ isAdmin = false }) => {
   }, []);
 
   const getPosts = useCallback(
-    (page = 1) => {
-      const adjustedPage = page - 1;
+    (page) => {
+      const adjustedPage = page;
       let params = {
-        page: adjustedPage,
-        size: limit,
+        _page: page,
+        _limit: limit,
         title_like: searchText,
       };
 
