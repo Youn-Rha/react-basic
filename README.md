@@ -8,12 +8,7 @@
 
 ### `CREATE`
 
-<<<<<<< HEAD
 블로그 글 작성
-=======
-Runs the app in the development mode.\
-Open [http://155.230.34.239:3000](http://155.230.34.239:3000) to view it in your browser.
->>>>>>> d6e2e9a (fix: api url)
 
 ### `READ`
 
