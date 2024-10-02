@@ -16,7 +16,7 @@ const BlogFrom = ({ editing = false }) => {
 
   useEffect(() => {
     if (editing) {
-      axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
+      axios.get(`http://155.230.34.239:3001/posts/${id}`).then((res) => {
         setTitle(res.data.title);
         setOriginalTitle(res.data.title);
         setBody(res.data.body);
@@ -46,7 +46,7 @@ const BlogFrom = ({ editing = false }) => {
   const onSubmit = () => {
     if (editing) {
       axios
-        .put(`http://localhost:3001/posts/${id}`, {
+        .put(`http://155.230.34.239:3001/posts/${id}`, {
           title,
           body,
           publish,
@@ -55,7 +55,7 @@ const BlogFrom = ({ editing = false }) => {
           navigate(`/blogs/${id}`);
         });
     } else {
-      // fetch('http://localhost:3001/posts',{
+      // fetch('http://155.230.34.239:3001/posts',{
       //   method: "POST",
       //   body: JSON.stringify({
       //     title,
@@ -65,11 +65,11 @@ const BlogFrom = ({ editing = false }) => {
       // )
       //   .then((response) => response.json())
       // //   .then((result) => console.log(result));
-      // fetch('http://localhost:3001/posts')
+      // fetch('http://155.230.34.239:3001/posts')
       //   .then((response) => response.json())
       //   .then((result) => console.log(result));
       axios
-        .post("http://localhost:3001/posts", {
+        .post("http://155.230.34.239:3001/posts", {
           title,
           body,
           publish,
@@ -78,7 +78,7 @@ const BlogFrom = ({ editing = false }) => {
         .then(() => {
           navigate("/admin");
         });
-      // axios.get('http://localhost:3001/posts')
+      // axios.get('http://155.230.34.239:3001/posts')
       //   .then(function(response){
       //     console.log(response);
       //   })

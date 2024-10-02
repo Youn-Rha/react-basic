@@ -25,7 +25,7 @@ const BlogListVer2 = ({ isAdmin = false }) => {
   const [searchText, setSearchText] = useState("");
 
   const fetchPosts = () => {
-    axios.get(`http://155.230.34.229:8080/posts`).then((res) => {
+    axios.get(`http://155.230.34.239:3001/posts`).then((res) => {
       isAdmin
         ? setNumberOfPosts(res.data.length)
         : setNumberOfPosts(res.data.filter((d) => d.publish).length);
@@ -51,7 +51,7 @@ const BlogListVer2 = ({ isAdmin = false }) => {
       }
 
       axios
-        .get(`http://155.230.34.229:8080/posts`, {
+        .get(`http://155.230.34.239:3001/posts`, {
           params,
         })
         .then((res) => {
@@ -69,7 +69,7 @@ const BlogListVer2 = ({ isAdmin = false }) => {
 
   const deleteBlog = (e, id) => {
     e.stopPropagation();
-    axios.delete(`http://155.230.34.229:8080/posts/${id}`).then(() => {
+    axios.delete(`http://155.230.34.239:3001/posts/${id}`).then(() => {
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     });
   };

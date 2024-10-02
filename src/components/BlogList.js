@@ -44,7 +44,7 @@ const BlogList = ({ isAdmin = false }) => {
       }
 
       axios
-        .get(`http://localhost:3001/posts`, {
+        .get(`http://155.230.34.239:3001/posts`, {
           params,
         })
         .then((res) => {
@@ -58,7 +58,7 @@ const BlogList = ({ isAdmin = false }) => {
 
   const deleteBlog = (e, id) => {
     e.stopPropagation();
-    axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
+    axios.delete(`http://155.230.34.239:3001/posts/${id}`).then(() => {
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     });
   };

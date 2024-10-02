@@ -10,7 +10,7 @@ const ShowPage = () => {
   const [loading, setLoading] = useState(true);
 
   const getPost = (id) => {
-    axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
+    axios.get(`http://155.230.34.239:3001/posts/${id}`).then((res) => {
       setPost(res.data);
       setLoading(false);
     });
